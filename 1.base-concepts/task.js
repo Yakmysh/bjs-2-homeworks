@@ -10,10 +10,7 @@ function solveEquation(a, b, c) {
 	} else if (d === 0) {
 		let x = -b / (2 * a);
 		arr.push(x);
-	} else if (d < 0) {
-		return arr;
 	}
-
 	return arr;
 }
 
