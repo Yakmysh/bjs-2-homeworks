@@ -1,29 +1,28 @@
 class PrintEditionItem {
-	constructor(name, releaseDate, pagesCount, state = 100, type = null) {
+	constructor(name, releaseDate, pagesCount) {
 		this.name = name;
 		this.releaseDate = releaseDate;
 		this.pagesCount = pagesCount;
-		this.state = state;
-		this.type = type;
-	};
-	fix() {
-		alert(this.state * 1.5);
-		return;
-	};
-	set state(number) {
-		if (number < 0) {
-			this._state = 0;
-		}
-		else if (number > 100) {
-		    this._state = 100;
-		}
-		this._state = number;
+		this.state = 100;
+		this.type = null;
 	}
+	fix() {
+		return this.state *= 1.5;
+	}
+	set state(value) {
+		if (value < 0) {
+			this._state = 0;
+		} else if (value > 100) {
+			this._state = 100;
+		} else {
+		    this._state = value;
+		}
+	}
+
 	get state() {
 		return this._state;
-	};
-};
-let book = new PrintEditionItem();
+	}
+}
 
 class Magazine extends PrintEditionItem {
 	constructor(name, releaseDate, pagesCount, state) {
@@ -66,36 +65,30 @@ class DetectiveBook extends Book {
 let book3 = new DetectiveBook();
 
 class Library {
-	constructor(name = "", books = []) {
+	constructor(name, books = []) {
 		this.name = name;
 		this.books = books;
 	}
 
-	addBook(book) {
-		if (this.state > 30) {
-			return this._books + 1;
-		}
-		this._books = book;
+	addBook(book){
+        if(book.state > 30){
+            this.books.push(book);
+        }
 	}
 
-   findBookBy(type, value){
-	 if(this.books.length === 0){
-		return null;
-	}
+	findBookBy(type, value){
+        let result = this.books.find(book => book[type] === value);
+        return result || null;
+      }
 
-	
-	this._type = type;
-	
-   }
-
-   giveBookByName(bookName){
-		if(this._name = true){
-			this.books.length - 1;
-			return this._name;
-		}
-		if (this.books.length === 0){
+	giveBookByName(bookName) {
+		let searchName = this.books.find(book => book.name === bookName);
+		if (searchName === undefined) {
 			return null;
-	    }
-	   this._name = bookName;
-}
+		} else {
+			this.books = this.books.filter(book => book.name !== bookName);
+			return searchName;
+		}
+	}
+    
 }
